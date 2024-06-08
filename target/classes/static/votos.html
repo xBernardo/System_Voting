@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Votos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('/urna/votos')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById("candidato-table-body");
+                    tableBody.innerHTML = "";
+                    data.forEach(candidato => {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${candidato.nome}</td>
+                            <td>${candidato.numero}</td>
+                            <td>${candidato.cargo}</td>
+                            <td>${candidato.votos}</td>
+                            <td>${candidato.cidade}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                });
+        });
+    </script>
+</head>
+<body>
+    <h1>Urna Eletrônica 2024</h1>
+    <div class="container mt-5">
+        <h2 class="mb-4">Lista de Candidatos</h2>
+        <div>
+            <a class="btn btn-primary" href="http://localhost:8080/static/votos-prefeitos.html">Votos para Prefeito</a>
+            <a class="btn btn-primary" href="http://localhost:8080/static/votos-vereadores.html">Votos para Vereador</a>
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Número</th>
+                    <th>Cargo</th>
+                    <th>Votos</th>
+                    <th>Cidade</th>
+                </tr>
+            </thead>
+            <tbody id="candidato-table-body">
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <a class="btn btn-primary" href="http://localhost:8080/static/index.html">Voltar</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
